@@ -1,0 +1,22 @@
+.DS_Store
+*.py
+__pycache__/
+
+# Reference / source files (not part of the site)
+*.pdf
+*.mp4
+*.textClipping
+renders/
+Floor plan/
+TRIPLEX/
+Real Image of the interior space/
+Selected photos for San Paolo 2/
+
+# Loose images in project root (site uses assets/)
+*.jpg
+*.jpeg
+*.png
+!assets/**
+
+# Legacy / reference HTML
+Barts_Private_Members_Club_Diagrama.html

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bart's — Triplex San Paolo</title>
+  <meta name="description" content="Apresentação imersiva do triplex nos andares 20–22 — Edifício San Paolo, Faria Lima.">
+  <meta property="og:title" content="Bart's — Triplex San Paolo">
+  <meta property="og:description" content="Triplex nos andares 20–22 — Edifício San Paolo, Faria Lima.">
+  <meta property="og:image" content="assets/hero/san-paolo-facade.jpg">
+  <meta name="theme-color" content="#E8E6E1">
+  <meta name="color-scheme" content="light">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="experience" aria-label="Apresentação imersiva Bart's Triplex San Paolo">
+
+    <!-- Full-screen image canvas -->
+    <div class="canvas" aria-hidden="true">
+      <div class="canvas-layer canvas-layer--base">
+        <img
+          id="canvas-base"
+          src="assets/hero/san-paolo-facade.jpg"
+          alt=""
+          fetchpriority="high"
+        >
+      </div>
+      <div class="canvas-layer canvas-layer--active" id="canvas-active">
+        <img id="canvas-img" src="" alt="">
+      </div>
+      <div class="canvas-shimmer"></div>
+      <div class="canvas-vignette"></div>
+    </div>
+
+    <!-- Frosted glass directory -->
+    <aside class="glass-directory" aria-label="Espaços do triplex">
+      <header class="directory-brand">
+        <p class="brand-wordmark">Bart's</p>
+        <p class="brand-line">Triplex · Andares 20–22</p>
+        <p class="brand-address">Edifício San Paolo · Faria Lima</p>
+      </header>
+
+      <figure class="floor-plan-mini" aria-hidden="true">
+        <img
+          src="assets/floor-plan/niveis.png"
+          alt=""
+          width="120"
+          height="90"
+        >
+      </figure>
+
+      <nav class="space-nav" id="space-nav" aria-label="Lista de espaços"></nav>
+
+      <p class="directory-hint">Passe o cursor sobre um nome</p>
+    </aside>
+
+    <!-- Minimal caption — appears on hover -->
+    <div class="glass-caption" id="glass-caption" aria-live="polite" hidden>
+      <p class="caption-universe" id="caption-universe"></p>
+      <h1 class="caption-name" id="caption-name"></h1>
+      <p class="caption-tag" id="caption-tag"></p>
+      <p class="caption-desc" id="caption-desc"></p>
+    </div>
+
+    <!-- Idle title when no space selected -->
+    <div class="glass-idle" id="glass-idle">
+      <p class="idle-eyebrow">San Paolo · São Paulo</p>
+      <h1 class="idle-title">O endereço mais alto<br>da Faria Lima</h1>
+    </div>
+
+    <footer class="experience-footer">
+      <span>10 microespaços</span>
+      <span class="footer-dot" aria-hidden="true">·</span>
+      <span>Cipriani · Dior · Zegna · Taschen · Bart's</span>
+    </footer>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

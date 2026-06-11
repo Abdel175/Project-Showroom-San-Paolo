@@ -1,0 +1,491 @@
+/* Bart's — Immersive projection presentation */
+
+:root {
+  --glass-bg:        rgba(255, 255, 255, 0.52);
+  --glass-bg-heavy:  rgba(255, 255, 255, 0.68);
+  --glass-border:    rgba(255, 255, 255, 0.72);
+  --glass-shadow:    0 8px 32px rgba(0, 0, 0, 0.06), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  --text:            #1d1d1f;
+  --text-soft:       rgba(29, 29, 31, 0.62);
+  --text-whisper:    rgba(29, 29, 31, 0.38);
+  --accent:          #6B5E4E;
+  --font-display:    'Cormorant Garamond', Georgia, serif;
+  --font-ui:         'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  --blur:            blur(48px) saturate(180%);
+  --ease:            cubic-bezier(0.22, 1, 0.36, 1);
+  --dur:             700ms;
+  --dur-fast:        400ms;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-weight: 300;
+  color: var(--text);
+  background: #E8E6E1;
+  cursor: default;
+  user-select: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(107, 94, 78, 0.18);
+}
+
+/* ============================================================
+   EXPERIENCE SHELL
+   ============================================================ */
+.experience {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* ============================================================
+   FULL-SCREEN CANVAS
+   ============================================================ */
+.canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.canvas-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.canvas-layer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.canvas-layer--base img {
+  transform: scale(1.02);
+  filter: saturate(0.92) brightness(0.96);
+}
+
+.canvas-layer--active {
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.canvas-layer--active.is-visible {
+  opacity: 1;
+}
+
+.canvas-layer--active img {
+  transition: opacity var(--dur-fast) var(--ease), transform 12s var(--ease);
+  transform: scale(1);
+}
+
+.canvas-layer--active.is-visible img {
+  transform: scale(1.04);
+}
+
+.canvas-layer--active img.is-fading {
+  opacity: 0;
+}
+
+.canvas-shimmer {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 20%, rgba(255,255,255,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(255,255,255,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.canvas-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(232,230,225,0.55) 0%, transparent 28%),
+    linear-gradient(to top, rgba(232,230,225,0.35) 0%, transparent 22%),
+    linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, transparent 18%);
+  pointer-events: none;
+}
+
+/* ============================================================
+   GLASS DIRECTORY — left panel
+   ============================================================ */
+.glass-directory {
+  position: absolute;
+  top: clamp(28px, 4vh, 48px);
+  left: clamp(28px, 4vw, 56px);
+  bottom: clamp(56px, 8vh, 72px);
+  width: clamp(240px, 22vw, 320px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 2.5vw, 32px);
+  background: var(--glass-bg);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--glass-shadow);
+}
+
+.directory-brand {
+  flex-shrink: 0;
+  margin-bottom: clamp(16px, 2vh, 24px);
+  padding-bottom: clamp(12px, 1.5vh, 18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.brand-wordmark {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(28px, 2.8vw, 36px);
+  font-variant: small-caps;
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.brand-line {
+  font-size: clamp(9px, 0.75vw, 11px);
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 6px;
+}
+
+.brand-address {
+  font-size: clamp(9px, 0.7vw, 10px);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--text-whisper);
+}
+
+/* Tiny floor plan — decorative only */
+.floor-plan-mini {
+  flex-shrink: 0;
+  align-self: flex-start;
+  width: clamp(72px, 7vw, 96px);
+  margin-bottom: clamp(16px, 2vh, 22px);
+  opacity: 0.45;
+  filter: grayscale(20%);
+  pointer-events: none;
+}
+
+.floor-plan-mini img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Space list */
+.space-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  margin-right: -8px;
+  padding-right: 4px;
+  scrollbar-width: none;
+}
+
+.space-nav::-webkit-scrollbar { display: none; }
+
+.space-group {
+  margin-bottom: clamp(14px, 1.8vh, 20px);
+}
+
+.space-floor {
+  font-size: clamp(8px, 0.65vw, 9px);
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-whisper);
+  margin-bottom: 6px;
+}
+
+.space-name {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(17px, 1.5vw, 22px);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  color: var(--text-soft);
+  padding: 5px 0;
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.space-name:hover,
+.space-name.is-preview {
+  color: var(--text);
+  border-bottom-color: rgba(107, 94, 78, 0.25);
+  transform: translateX(3px);
+}
+
+.space-name.is-active {
+  color: var(--text);
+  font-weight: 500;
+  border-bottom-color: var(--accent);
+}
+
+.directory-hint {
+  flex-shrink: 0;
+  margin-top: clamp(12px, 1.5vh, 16px);
+  padding-top: clamp(10px, 1.2vh, 14px);
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: clamp(8px, 0.65vw, 9px);
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-whisper);
+  text-align: center;
+}
+
+/* ============================================================
+   GLASS CAPTION — bottom right
+   ============================================================ */
+.glass-caption {
+  position: absolute;
+  right: clamp(28px, 4vw, 56px);
+  bottom: clamp(56px, 8vh, 72px);
+  z-index: 10;
+  max-width: clamp(320px, 36vw, 480px);
+  padding: clamp(28px, 3vw, 40px);
+  background: var(--glass-bg-heavy);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--glass-shadow);
+  animation: captionIn var(--dur) var(--ease) both;
+}
+
+@keyframes captionIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.caption-universe {
+  font-size: clamp(9px, 0.7vw, 10px);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.caption-name {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  margin-bottom: 10px;
+}
+
+.caption-tag {
+  font-size: clamp(9px, 0.75vw, 11px);
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 14px;
+}
+
+.caption-desc {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.55;
+  color: var(--text-soft);
+  max-width: 38ch;
+}
+
+/* ============================================================
+   IDLE STATE — center title
+   ============================================================ */
+.glass-idle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.glass-idle.is-hidden {
+  opacity: 0;
+  transform: translate(-50%, -48%);
+}
+
+.idle-eyebrow {
+  font-size: clamp(10px, 0.85vw, 12px);
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 1px 24px rgba(0, 0, 0, 0.2);
+  margin-bottom: clamp(12px, 1.5vh, 20px);
+}
+
+.idle-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(40px, 5.5vw, 72px);
+  line-height: 1.08;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.experience-footer {
+  position: absolute;
+  bottom: clamp(16px, 2.5vh, 24px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+  font-size: clamp(8px, 0.65vw, 10px);
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+.footer-dot {
+  opacity: 0.4;
+}
+
+/* ============================================================
+   PROJECTION / LARGE SCREEN
+   ============================================================ */
+@media (min-width: 1600px) {
+  .glass-directory {
+    width: clamp(280px, 18vw, 360px);
+  }
+
+  .space-name {
+    font-size: clamp(20px, 1.4vw, 26px);
+  }
+
+  .caption-name {
+    font-size: clamp(48px, 3.5vw, 72px);
+  }
+}
+
+@media (max-width: 900px) {
+  .glass-directory {
+    top: auto;
+    left: 16px;
+    right: 16px;
+    bottom: 56px;
+    width: auto;
+    max-height: 42vh;
+    border-radius: 16px;
+  }
+
+  .floor-plan-mini {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 56px;
+    margin: 0;
+  }
+
+  .glass-caption {
+    left: 16px;
+    right: 16px;
+    bottom: auto;
+    top: 16px;
+    max-width: none;
+    padding: 20px 24px;
+  }
+
+  .caption-name {
+    font-size: clamp(28px, 7vw, 40px);
+  }
+
+  .glass-idle {
+    top: 38%;
+  }
+
+  .idle-title {
+    font-size: clamp(32px, 8vw, 48px);
+  }
+
+  .experience-footer {
+    font-size: 7px;
+    padding: 6px 14px;
+    max-width: calc(100% - 32px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .canvas-layer--active img {
+    transform: none !important;
+  }
+}
