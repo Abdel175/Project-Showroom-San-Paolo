@@ -11,16 +11,15 @@
 
   /* ── Hotspot rectangles (% of floor-plan image) — edit here or ?edit-hotspots=1 ── */
   const HOTSPOT_COORDS = {
-    'cipriani-wine-spirits': { left: 9,  top: 6,  width: 24, height: 17 },
-    'cipriani-fine-dining':  { left: 31, top: 5,  width: 22, height: 18 },
-    'cipriani-bar-lounge':   { left: 53, top: 6,  width: 28, height: 17 },
-    'dior':                  { left: 10, top: 33, width: 22, height: 19 },
-    'zegna-21':              { left: 33, top: 32, width: 20, height: 20 },
-    'taschen':               { left: 54, top: 33, width: 30, height: 20 },
-    'zegna-20a':             { left: 8,  top: 59, width: 22, height: 18 },
-    'zegna-20b':             { left: 27, top: 58, width: 24, height: 19 },
-    'barts-bar':             { left: 53, top: 60, width: 30, height: 9 },
-    'barts-cowork':          { left: 53, top: 69, width: 28, height: 9 }
+    'cipriani-bar-lounge':   { left: 1.4,  top: 15.4, width: 12.9, height: 8.5 },
+    'cipriani-wine-spirits': { left: 48.9, top: 5,    width: 18.4, height: 8.7 },
+    'cipriani-fine-dining':  { left: 79.7, top: 21.6, width: 12.7, height: 8.5 },
+    'dior':                  { left: 2.5,  top: 41.6, width: 9.6,  height: 6.8 },
+    'zegna-21':              { left: 6.1,  top: 53,   width: 12.8, height: 6.1 },
+    'taschen':               { left: 73,   top: 60.5, width: 18.4, height: 5.6 },
+    'zegna-20a':             { left: 4.2,  top: 70.2, width: 16.4, height: 6.1 },
+    'zegna-20b':             { left: 14.7, top: 83.1, width: 12.1, height: 6.4 },
+    'barts-bar':             { left: 78.4, top: 86.4, width: 19.3, height: 5.5 }
   };
 
   const UNIVERSE_ORDER = ['gastronomia', 'moda', 'cultura', 'casabarts'];
@@ -34,126 +33,136 @@
 
   const SPACES = {
     'cipriani-fine-dining': {
-      name: 'Cipriani',
+      spaceName: 'Restaurante',
       category: 'Fine Dining',
+      brand: 'Cipriani',
       universe: 'gastronomia',
       description: 'Gastronomia italiana de excelência com vista para o skyline de Faria Lima.',
       photos: [
-        'assets/zones/cipriani-1.jpg',
-        'assets/zones/cipriani-2.jpg',
-        'assets/zones/cipriani-3.jpg'
+        'assets/zones/cipriani-fine-dining-1.jpg',
+        'assets/zones/cipriani-fine-dining-2.jpg',
+        'assets/zones/cipriani-fine-dining-3.jpg'
       ],
       color: '#E8A0B0'
     },
     'cipriani-bar-lounge': {
-      name: 'Cipriani',
+      spaceName: "Harry's Bar",
       category: 'Bar & Lounge',
+      brand: 'Cipriani',
       universe: 'gastronomia',
       description: 'Coquetéis autorais e lounge intimista com atmosfera de clube privado.',
       photos: [
-        'assets/zones/cipriani-east-1.jpg',
-        'assets/zones/cipriani-east-2.jpg',
-        'assets/zones/cipriani-east-3.jpg'
+        'assets/zones/cipriani-bar-lounge-1.jpg',
+        'assets/zones/cipriani-bar-lounge-2.jpg',
+        'assets/zones/cipriani-bar-lounge-3.jpg',
+        'assets/zones/cipriani-bar-lounge-4.jpg'
       ],
       color: '#E8A0B0'
     },
     'cipriani-wine-spirits': {
-      name: 'Cipriani',
+      spaceName: 'Adega/Wine Locker',
       category: 'Wine & Spirits',
+      brand: 'Cipriani',
       universe: 'gastronomia',
       description: 'Rótulos raros e destilados premium — a ala enológica no topo da torre.',
       photos: [
-        'assets/zones/cipriani-west-1.jpg',
-        'assets/zones/cipriani-west-2.jpg',
-        'assets/zones/cipriani-west-3.jpg'
+        'assets/zones/cipriani-wine-spirits-1.jpg',
+        'assets/zones/cipriani-wine-spirits-2.jpg',
+        'assets/zones/cipriani-wine-spirits-3.jpg'
       ],
       color: '#E8A0B0'
     },
     dior: {
-      name: 'Dior',
+      spaceName: 'Beauty',
       category: 'Maison de Mode',
+      brand: 'Dior',
       universe: 'moda',
       description: 'Alta costura, vitrines e experiências exclusivas para membros.',
       photos: [
         'assets/zones/dior-1.jpg',
         'assets/zones/dior-2.jpg',
         'assets/zones/dior-3.jpg',
-        'assets/zones/dior-4.jpg'
+        'assets/zones/dior-4.jpg',
+        'assets/zones/dior-5.jpg',
+        'assets/zones/dior-6.jpg'
       ],
       color: '#E8D48A'
     },
     'zegna-21': {
-      name: 'Zegna',
+      spaceName: 'Café',
       category: 'Luxury Lounge',
+      brand: 'Zegna',
       universe: 'moda',
       description: 'Bebidas finas e jantar privativo no coração do San Paolo.',
       photos: [
         'assets/zones/zegna-21-1.jpg',
         'assets/zones/zegna-21-2.jpg',
-        'assets/zones/zegna-21-3.jpg'
+        'assets/zones/zegna-21-3.jpg',
+        'assets/zones/zegna-21-4.jpg',
+        'assets/zones/zegna-21-5.jpg'
       ],
       color: '#5BA8A8'
     },
     taschen: {
-      name: 'Taschen',
+      spaceName: 'Book Shop/Library',
       category: 'Bookshop & Gallery',
+      brand: 'Taschen',
       universe: 'cultura',
       description: 'Edições raras, arte contemporânea e curadoria editorial.',
       photos: [
         'assets/zones/taschen-1.jpg',
         'assets/zones/taschen-2.jpg',
         'assets/zones/taschen-3.jpg',
-        'assets/zones/taschen-4.jpg'
+        'assets/zones/taschen-4.jpg',
+        'assets/zones/taschen-5.jpg',
+        'assets/zones/taschen-6.jpg'
       ],
       color: '#4A7FC4'
     },
     'zegna-20a': {
-      name: 'Zegna',
+      spaceName: 'Conference Room',
       category: 'Workspace Premium',
+      brand: 'Zegna',
       universe: 'moda',
       description: 'Reuniões com acabamentos em madeira nobre e couro.',
       photos: [
         'assets/zones/zegna-20a-1.jpg',
-        'assets/zones/zegna-20a-2.jpg',
-        'assets/zones/zegna-20a-3.jpg'
+        'assets/zones/zegna-20a-2.jpg'
       ],
       color: '#8B6914'
     },
     'zegna-20b': {
-      name: 'Zegna',
+      spaceName: 'Work Space',
       category: 'Living & Showroom',
+      brand: 'Zegna',
       universe: 'moda',
       description: 'Showroom residencial com curadoria de tecidos e alfaiataria.',
       photos: [
         'assets/zones/zegna-20b-1.jpg',
         'assets/zones/zegna-20b-2.jpg',
-        'assets/zones/zegna-20b-3.jpg'
+        'assets/zones/zegna-20b-3.jpg',
+        'assets/zones/zegna-20b-4.jpg',
+        'assets/zones/zegna-20b-5.jpg',
+        'assets/zones/zegna-20b-6.jpg',
+        'assets/zones/zegna-20b-7.jpg',
+        'assets/zones/zegna-20b-8.jpg'
       ],
       color: '#D4843A'
     },
     'barts-bar': {
-      name: 'Bar & Clube Lounge',
+      spaceName: 'Art Gallery',
       category: 'Âncora Social',
+      brand: 'Barts & Co',
       universe: 'casabarts',
       description: 'Cocktails autorais e o ponto de encontro da Casa Barts.',
       photos: [
-        'assets/zones/barts-bar-1.jpg',
-        'assets/zones/barts-bar-2.jpg',
-        'assets/zones/barts-bar-3.jpg',
-        'assets/zones/barts-bar-4.jpg'
-      ],
-      color: '#D946A8'
-    },
-    'barts-cowork': {
-      name: 'Coworking',
-      category: 'Work & Create',
-      universe: 'casabarts',
-      description: 'Coworking premium com salas privadas para membros.',
-      photos: [
-        'assets/zones/barts-cowork-1.jpg',
-        'assets/zones/barts-cowork-2.jpg',
-        'assets/zones/barts-cowork-3.jpg',
-        'assets/zones/barts-cowork-4.jpg'
+        'assets/zones/art-gallery-1.png',
+        'assets/zones/art-gallery-2.png',
+        'assets/zones/art-gallery-3.png',
+        'assets/zones/art-gallery-4.png',
+        'assets/zones/art-gallery-5.png',
+        'assets/zones/art-gallery-6.png',
+        'assets/zones/art-gallery-7.png'
       ],
       color: '#D946A8'
     }
@@ -210,13 +219,8 @@
     }
   }
 
-  const BRAND_NAMES = new Set(['Cipriani', 'Dior', 'Zegna', 'Taschen']);
-
-  function getSpaceLabels(space) {
-    if (BRAND_NAMES.has(space.name)) {
-      return { descriptor: space.category, brand: space.name };
-    }
-    return { descriptor: space.name, brand: space.category };
+  function getSpaceAriaLabel(space) {
+    return `${space.category}, ${space.spaceName}, ${space.brand}`;
   }
 
   function cacheRefs() {
@@ -283,18 +287,20 @@
     state.lightboxId = id;
     state.slideIndex = 0;
 
-    $lightboxTitle.textContent = space.name;
+    $lightboxTitle.textContent = space.spaceName;
     $lightboxCategory.textContent = space.category;
 
-    const photos = space.photos.slice(0, 5);
+    const photos = space.photos;
     $lightboxSlides.innerHTML = '';
     $lightboxDots.innerHTML = '';
+    $lightbox.hidden = false;
+    document.body.classList.add('lightbox-open');
 
     photos.forEach((src, i) => {
       const slide = document.createElement('div');
       slide.className = 'lightbox-slide' + (i === 0 ? ' is-active' : '');
       const img = document.createElement('img');
-      img.alt = `${space.name} — foto ${i + 1}`;
+      img.alt = `${space.spaceName} — foto ${i + 1}`;
       if (i <= 1) {
         img.src = src;
       } else {
@@ -312,8 +318,6 @@
       $lightboxDots.appendChild(dot);
     });
 
-    $lightbox.hidden = false;
-    document.body.classList.add('lightbox-open');
     $lightboxClose.focus();
     preloadAdjacentSlides();
     startLightboxAutoplay();
@@ -339,7 +343,7 @@
     const space = getSpace(state.lightboxId);
     if (!space || !$lightboxSlides) return;
 
-    const photos = space.photos.slice(0, 5);
+    const photos = space.photos;
     const count = photos.length;
     if (!count) return;
 
@@ -351,7 +355,7 @@
     slides.forEach((slide, i) => {
       slide.classList.toggle('is-active', i === state.slideIndex);
       const img = slide.querySelector('img');
-      if (img && img.dataset.src && !img.src) {
+      if (img && img.dataset.src && !img.getAttribute('src')) {
         img.src = img.dataset.src;
       }
     });
@@ -376,7 +380,7 @@
     const space = getSpace(state.lightboxId);
     if (!space) return;
 
-    const photos = space.photos.slice(0, 5);
+    const photos = space.photos;
     const next = (state.slideIndex + 1) % photos.length;
     const prev = (state.slideIndex - 1 + photos.length) % photos.length;
 
@@ -406,8 +410,8 @@
   function announceSlide() {
     const space = getSpace(state.lightboxId);
     if (!space || !$lightboxLive) return;
-    const total = Math.min(space.photos.length, 5);
-    $lightboxLive.textContent = `${space.name}, foto ${state.slideIndex + 1} de ${total}`;
+    const total = space.photos.length;
+    $lightboxLive.textContent = `${space.spaceName}, foto ${state.slideIndex + 1} de ${total}`;
   }
 
   function bindLightbox() {
@@ -510,7 +514,7 @@
 
       keys.forEach(id => {
         const space = SPACES[id];
-        const labels = getSpaceLabels(space);
+        const ariaLabel = getSpaceAriaLabel(space);
         const row = document.createElement('div');
         row.className = 'space-row hover-zone';
         row.dataset.space = id;
@@ -518,21 +522,18 @@
         const text = document.createElement('div');
         text.className = 'space-row__text';
 
-        const descriptor = document.createElement('span');
-        descriptor.className = 'space-type';
-        descriptor.textContent = labels.descriptor;
+        const categoryLine = document.createElement('span');
+        categoryLine.className = 'space-category-line';
+        categoryLine.textContent = space.category;
 
-        const brand = document.createElement('span');
-        brand.className = 'space-brand';
-        brand.textContent = labels.brand;
-
-        const desc = document.createElement('p');
-        desc.className = 'space-desc';
-        desc.textContent = space.description;
+        const detailLine = document.createElement('span');
+        detailLine.className = 'space-detail-line';
+        detailLine.textContent = `${space.spaceName} · ${space.brand}`;
 
         row.setAttribute('role', 'button');
         row.tabIndex = 0;
-        row.setAttribute('aria-label', `${labels.descriptor}, ${labels.brand}`);
+        row.setAttribute('aria-label', ariaLabel);
+        row.setAttribute('title', space.description);
 
         row.addEventListener('mouseenter', () => enterHover(id));
         row.addEventListener('mouseleave', scheduleHoverClose);
@@ -544,9 +545,8 @@
           }
         });
 
-        text.appendChild(descriptor);
-        text.appendChild(brand);
-        text.appendChild(desc);
+        text.appendChild(categoryLine);
+        text.appendChild(detailLine);
         row.appendChild(text);
         group.appendChild(row);
         spaceRows[id] = row;
@@ -569,8 +569,7 @@
       el.type = 'button';
       el.className = 'plan-hotspot hover-zone';
       el.dataset.space = id;
-      const labels = getSpaceLabels(space);
-      el.setAttribute('aria-label', `${labels.descriptor}, ${labels.brand}`);
+      el.setAttribute('aria-label', getSpaceAriaLabel(space));
       el.style.setProperty('--zone-color', space.color);
       el.style.left = coords.left + '%';
       el.style.top = coords.top + '%';
@@ -712,7 +711,7 @@
       $canvasImg.src = src;
       $canvasImg.dataset.src = src;
       $canvasImg.dataset.spaceId = spaceId;
-      $canvasImg.alt = getSpace(spaceId)?.name || '';
+      $canvasImg.alt = getSpace(spaceId)?.spaceName || '';
       requestAnimationFrame(() => {
         $canvasImg.classList.remove('is-fading');
       });
@@ -728,22 +727,26 @@
 
     Object.entries(spaceRows).forEach(([id, row]) => {
       const space = getSpace(id);
-      const brand = row.querySelector('.space-brand');
+      const categoryLine = row.querySelector('.space-category-line');
+      const detailLine = row.querySelector('.space-detail-line');
       const isActive = id === activeId;
 
       row.classList.toggle('is-active', isActive);
-      brand?.classList.toggle('is-selected', isActive);
+      categoryLine?.classList.toggle('is-selected', isActive);
+      detailLine?.classList.toggle('is-selected', isActive);
 
       if (isActive && space) {
         row.style.setProperty('--zone-color', space.color);
-        brand?.style.setProperty('--zone-color', space.color);
+        categoryLine?.style.setProperty('--zone-color', space.color);
+        detailLine?.style.setProperty('--zone-color', space.color);
         row.scrollIntoView({
           block: 'nearest',
           behavior: prefersReducedMotion ? 'auto' : 'smooth'
         });
       } else {
         row.style.removeProperty('--zone-color');
-        brand?.style.removeProperty('--zone-color');
+        categoryLine?.style.removeProperty('--zone-color');
+        detailLine?.style.removeProperty('--zone-color');
       }
     });
 
@@ -768,9 +771,9 @@
   function blockScroll() {
     document.body.style.overflow = 'hidden';
     window.addEventListener('wheel', e => {
-      if (!document.body.classList.contains('lightbox-open')) {
-        e.preventDefault();
-      }
+      if (document.body.classList.contains('lightbox-open')) return;
+      if (e.target.closest('.space-nav')) return;
+      e.preventDefault();
     }, { passive: false });
   }
 
