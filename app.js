@@ -171,12 +171,7 @@
 
   let $canvasActive;
   let $canvasImg;
-  let $glassCaption;
   let $glassIdle;
-  let $captionUniverse;
-  let $captionName;
-  let $captionTag;
-  let $captionDesc;
   let spaceRows = {};
   let hotspotEls = {};
   let hoverCloseTimer = null;
@@ -215,15 +210,19 @@
     }
   }
 
+  const BRAND_NAMES = new Set(['Cipriani', 'Dior', 'Zegna', 'Taschen']);
+
+  function getSpaceLabels(space) {
+    if (BRAND_NAMES.has(space.name)) {
+      return { descriptor: space.category, brand: space.name };
+    }
+    return { descriptor: space.name, brand: space.category };
+  }
+
   function cacheRefs() {
     $canvasActive = document.getElementById('canvas-active');
     $canvasImg = document.getElementById('canvas-img');
-    $glassCaption = document.getElementById('glass-caption');
     $glassIdle = document.getElementById('glass-idle');
-    $captionUniverse = document.getElementById('caption-universe');
-    $captionName = document.getElementById('caption-name');
-    $captionTag = document.getElementById('caption-tag');
-    $captionDesc = document.getElementById('caption-desc');
 
     $lightbox = document.getElementById('lightbox');
     $lightboxBackdrop = document.getElementById('lightbox-backdrop');
@@ -274,15 +273,6 @@
       state.hoverInside = true;
     });
     nav?.addEventListener('mouseleave', scheduleHoverClose);
-
-    $glassCaption?.addEventListener('mouseenter', () => {
-      if (hoverCloseTimer) {
-        clearTimeout(hoverCloseTimer);
-        hoverCloseTimer = null;
-      }
-      state.hoverInside = true;
-    });
-    $glassCaption?.addEventListener('mouseleave', scheduleHoverClose);
   }
 
   function openLightbox(id, trigger) {
@@ -520,21 +510,29 @@
 
       keys.forEach(id => {
         const space = SPACES[id];
+        const labels = getSpaceLabels(space);
         const row = document.createElement('div');
         row.className = 'space-row hover-zone';
         row.dataset.space = id;
 
-        const name = document.createElement('span');
-        name.className = 'space-name';
-        name.textContent = space.name;
+        const text = document.createElement('div');
+        text.className = 'space-row__text';
 
-        const tag = document.createElement('span');
-        tag.className = 'space-tag';
-        tag.textContent = space.category;
+        const descriptor = document.createElement('span');
+        descriptor.className = 'space-type';
+        descriptor.textContent = labels.descriptor;
+
+        const brand = document.createElement('span');
+        brand.className = 'space-brand';
+        brand.textContent = labels.brand;
+
+        const desc = document.createElement('p');
+        desc.className = 'space-desc';
+        desc.textContent = space.description;
 
         row.setAttribute('role', 'button');
         row.tabIndex = 0;
-        row.setAttribute('aria-label', `${space.name}, ${space.category}`);
+        row.setAttribute('aria-label', `${labels.descriptor}, ${labels.brand}`);
 
         row.addEventListener('mouseenter', () => enterHover(id));
         row.addEventListener('mouseleave', scheduleHoverClose);
@@ -546,8 +544,10 @@
           }
         });
 
-        row.appendChild(name);
-        row.appendChild(tag);
+        text.appendChild(descriptor);
+        text.appendChild(brand);
+        text.appendChild(desc);
+        row.appendChild(text);
         group.appendChild(row);
         spaceRows[id] = row;
       });
@@ -569,7 +569,8 @@
       el.type = 'button';
       el.className = 'plan-hotspot hover-zone';
       el.dataset.space = id;
-      el.setAttribute('aria-label', `${space.name}, ${space.category}`);
+      const labels = getSpaceLabels(space);
+      el.setAttribute('aria-label', `${labels.descriptor}, ${labels.brand}`);
       el.style.setProperty('--zone-color', space.color);
       el.style.left = coords.left + '%';
       el.style.top = coords.top + '%';
@@ -681,7 +682,6 @@
 
     if (!space) {
       $canvasActive.classList.remove('is-visible');
-      $glassCaption.hidden = true;
       $glassIdle.classList.remove('is-hidden');
       if ($canvasImg) {
         delete $canvasImg.dataset.src;
@@ -697,12 +697,6 @@
     }
 
     $glassIdle.classList.add('is-hidden');
-    $glassCaption.hidden = false;
-
-    $captionUniverse.textContent = UNIVERSES[space.universe];
-    $captionName.textContent = space.name;
-    $captionTag.textContent = space.category;
-    $captionDesc.textContent = space.description;
 
     setCanvasImage(space.photos[0], id);
     $canvasActive.classList.add('is-visible');
@@ -734,18 +728,22 @@
 
     Object.entries(spaceRows).forEach(([id, row]) => {
       const space = getSpace(id);
-      const name = row.querySelector('.space-name');
+      const brand = row.querySelector('.space-brand');
       const isActive = id === activeId;
 
       row.classList.toggle('is-active', isActive);
-      name?.classList.toggle('is-selected', isActive);
+      brand?.classList.toggle('is-selected', isActive);
 
       if (isActive && space) {
         row.style.setProperty('--zone-color', space.color);
-        name?.style.setProperty('--zone-color', space.color);
+        brand?.style.setProperty('--zone-color', space.color);
+        row.scrollIntoView({
+          block: 'nearest',
+          behavior: prefersReducedMotion ? 'auto' : 'smooth'
+        });
       } else {
         row.style.removeProperty('--zone-color');
-        name?.style.removeProperty('--zone-color');
+        brand?.style.removeProperty('--zone-color');
       }
     });
 
